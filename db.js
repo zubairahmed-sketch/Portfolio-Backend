@@ -14,7 +14,7 @@ if (!cached) {
 
 export async function connectDB() {
   if (cached.conn) {
-    return cached.conn.getClient().db()
+    return mongoose.connection.db
   }
 
   if (!cached.promise) {
@@ -26,5 +26,5 @@ export async function connectDB() {
   }
 
   cached.conn = await cached.promise
-  return cached.conn.getClient().db()
+  return mongoose.connection.db
 }
