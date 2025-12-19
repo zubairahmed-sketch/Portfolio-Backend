@@ -1,17 +1,17 @@
 import express from "express"
+import mongoose from "mongoose"
 import { connectDB } from "../db.js"
 
 const router = express.Router()
 
 router.get("/", async (req, res) => {
   try {
-    const db = await connectDB()
-    console.log("Connected to database, querying Projects collection...")
+    await connectDB()
+    const db = mongoose.connection.db
     const projects = await db.collection("Projects").find({}).toArray()
-    console.log(`Found ${projects.length} projects:`, projects)
     res.json({ success: true, data: projects })
   } catch (error) {
-    console.error("Error fetching projects:", error)
+    console.error("Projects error:", error.message)
     res.status(500).json({ success: false, error: error.message })
   }
 })

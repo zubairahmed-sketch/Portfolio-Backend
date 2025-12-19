@@ -6,25 +6,16 @@ if (!MONGODB_URI) {
   throw new Error("MONGODB_URI is not defined")
 }
 
-let cached = global.mongoose
-
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null }
-}
+let conn = null
 
 export async function connectDB() {
-  if (cached.conn) {
-    return mongoose.connection.db
+  if (conn) {
+    return conn
   }
-
-  if (!cached.promise) {
-    const opts = {
-      bufferCommands: false,
-    }
-
-    cached.promise = mongoose.connect(MONGODB_URI, opts)
-  }
-
-  cached.conn = await cached.promise
-  return mongoose.connection.db
+  
+  conn = await mongoose.connect(MONGODB_URI, {
+    bufferCommands: false,
+  })
+  
+  return conn
 }
