@@ -1,11 +1,11 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose"
 
 const serviceSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
-  icon: { type: String, default: '⚙️' },
+  icon: { type: String },
   technologies: { type: [String], default: [] },
-  link: { type: String, default: '#' },
+  link: { type: String }
 }, { timestamps: true })
 
-export default mongoose.models.Service || mongoose.model('Service', serviceSchema)
+export default mongoose.models.Service || mongoose.model("Service", serviceSchema)
