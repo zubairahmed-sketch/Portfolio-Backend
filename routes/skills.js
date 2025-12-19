@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
   try {
     await connectDB()
     console.log("Querying Skills collection...")
-    const skills = await Skill.find()
+    const skills = await Skill.find().lean()
     console.log(`Found ${skills.length} skills:`, skills)
     res.json({ success: true, data: skills })
   } catch (error) {

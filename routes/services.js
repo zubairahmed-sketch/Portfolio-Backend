@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
   try {
     await connectDB()
     console.log("Querying Services collection...")
-    const services = await Service.find()
+    const services = await Service.find().lean()
     console.log(`Found ${services.length} services:`, services)
     res.json({ success: true, data: services })
   } catch (error) {
