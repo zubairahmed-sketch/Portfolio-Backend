@@ -1,9 +1,9 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose"
 
 const MONGODB_URI = process.env.MONGODB_URI
 
 if (!MONGODB_URI) {
-  throw new Error('MONGODB_URI is not defined')
+  throw new Error("MONGODB_URI is not defined")
 }
 
 let cached = global.mongoose
@@ -14,7 +14,7 @@ if (!cached) {
 
 export async function connectDB() {
   if (cached.conn) {
-    return cached.conn
+    return cached.conn.getClient().db()
   }
 
   if (!cached.promise) {
@@ -26,5 +26,5 @@ export async function connectDB() {
   }
 
   cached.conn = await cached.promise
-  return cached.conn
+  return cached.conn.getClient().db()
 }
